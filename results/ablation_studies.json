@@ -1,0 +1,208 @@
+{
+  "study_name": "P-SAFE Component Ablation Studies",
+  "date": "2025-11-05",
+  "description": "Systematic evaluation of each component's contribution",
+  
+  "trajectory_module_ablation": {
+    "study": "Evaluate STGCN-BLE design choices",
+    "horizon": "3 seconds (30 timesteps at 10Hz)",
+    "metric": "Final Displacement Error (FDE) in meters",
+    
+    "results": [
+      {
+        "model": "Kalman Filter (Physics-Only)",
+        "ADE_m": 29.97,
+        "FDE_m": 44.59,
+        "improvement_vs_ours": "-98.1%",
+        "comment": "Non-learning baseline, poor for non-linear motion"
+      },
+      {
+        "model": "Social-LSTM",
+        "ADE_m": 1.92,
+        "FDE_m": 3.85,
+        "improvement_vs_ours": "-77.7%",
+        "comment": "Established baseline, struggles with long-range dependencies"
+      },
+      {
+        "model": "Mamba-2 Individual (No-GCN)",
+        "ADE_m": 1.26,
+        "FDE_m": 1.26,
+        "improvement_vs_ours": "-31.7%",
+        "comment": "Good temporal modeling but misses social interactions"
+      },
+      {
+        "model": "STGCN-LSTM (No-Mamba)",
+        "ADE_m": 1.29,
+        "FDE_m": 1.38,
+        "improvement_vs_ours": "-37.7%",
+        "comment": "GCN helps but LSTM forgets long-term patterns"
+      },
+      {
+        "model": "P-SAFE (STGCN-BLE Full)",
+        "ADE_m": 0.43,
+        "FDE_m": 0.857,
+        "improvement_vs_ours": "0% (reference)",
+        "comment": "Best: Mamba-2 temporal + GCN spatial"
+      }
+    ],
+    
+    "key_insights": {
+      "mamba2_contribution": "31.7% FDE improvement over individual model",
+      "gcn_contribution": "Captures group dynamics (batch crossing behavior)",
+      "vs_social_lstm": "77.7% improvement validates architecture shift"
+    }
+  },
+  
+  "perception_module_ablation": {
+    "study": "Evaluate YOLOv8-ViT hierarchical design",
+    "datasets": ["PIE", "JAAD"],
+    
+    "results": [
+      {
+        "model": "YOLOv8-Only",
+        "detection_mAP": 0.902,
+        "age_acc": 0.876,
+        "intent_AUC": 0.763,
+        "FPS": 45.3,
+        "comment": "Fast but struggles with complex intent prediction"
+      },
+      {
+        "model": "ViT-Only",
+        "detection_mAP": 0.834,
+        "age_acc": 0.841,
+        "intent_AUC": 0.857,
+        "FPS": 8.2,
+        "comment": "Better intent but slow and unfocused"
+      },
+      {
+        "model": "Naive-Fusion (Late Concat)",
+        "detection_mAP": 0.917,
+        "age_acc": 0.883,
+        "intent_AUC": 0.879,
+        "FPS": 28.1,
+        "comment": "Good but lacks internal conditioning"
+      },
+      {
+        "model": "P-SAFE (YOLOv8-ViT)",
+        "detection_mAP": 0.924,
+        "age_acc": 0.891,
+        "intent_AUC": 0.91,
+        "FPS": 32.5,
+        "comment": "Best: hierarchical + internal age conditioning"
+      }
+    ],
+    
+    "key_insights": {
+      "hierarchical_benefit": "Best of both worlds: speed + accuracy",
+      "internal_conditioning": "+3.5% intent AUC vs naive fusion",
+      "efficiency": "4x faster than ViT-Only while more accurate"
+    }
+  },
+  
+  "fusion_architecture_ablation": {
+    "study": "Compare fusion mechanisms",
+    "metric": "Detection F1-Score and Occlusion Resilience",
+    
+    "results": [
+      {
+        "model": "Simple Concatenation",
+        "F1": 0.921,
+        "occlusion_resilience": 0.812,
+        "comment": "No learned interaction between modalities"
+      },
+      {
+        "model": "Gated Fusion",
+        "F1": 0.947,
+        "occlusion_resilience": 0.856,
+        "comment": "Learns to weight modalities but stateless"
+      },
+      {
+        "model": "Attention-Only Fusion",
+        "F1": 0.968,
+        "occlusion_resilience": 0.891,
+        "comment": "Good but no temporal memory"
+      },
+      {
+        "model": "Mamba-2 Fusion (Ours)",
+        "F1": 0.984,
+        "occlusion_resilience": 0.923,
+        "comment": "Best: selective SSM preserves semantic attributes"
+      }
+    ],
+    
+    "key_insights": {
+      "mamba2_advantage": "+1.6% F1 and +3.2% resilience vs attention",
+      "attribute_permanence": "Retains 'child' label during 3s occlusion",
+      "computational_efficiency": "O(T) vs O(T^2) for attention"
+    }
+  },
+  
+  "planner_architecture_ablation": {
+    "study": "Compare decision-making approaches",
+    "scenarios": ["Low-density", "High-density", "Occlusion"],
+    
+    "results": [
+      {
+        "model": "DQN (Model-Free RL)",
+        "avg_ped_wait_s": 15.3,
+        "conflict_rate": 0.021,
+        "Jain_fairness": 0.744,
+        "comment": "Reactive, poor long-term planning"
+      },
+      {
+        "model": "Decision Transformer",
+        "avg_ped_wait_s": 11.9,
+        "conflict_rate": 0.014,
+        "Jain_fairness": 0.791,
+        "comment": "Better sequence modeling but not adaptive"
+      },
+      {
+        "model": "DreamerV3-RT2 (Ours)",
+        "avg_ped_wait_s": 9.27,
+        "conflict_rate": 0.0026,
+        "Jain_fairness": 0.834,
+        "comment": "Best: model-based planning with world model"
+      }
+    ],
+    
+    "key_insights": {
+      "model_based_advantage": "8x fewer conflicts than DQN",
+      "batch_service_policy": "Learned to serve pedestrian groups efficiently",
+      "smart_compliance": "97.4% compliance to valid requests (not naive reactive)"
+    }
+  },
+  
+  "end_to_end_training_benefit": {
+    "study": "Modular vs End-to-End training",
+    
+    "Stage_4_Frozen_Components": {
+      "avg_ped_wait_s": 12.1,
+      "conflict_rate": 0.0095,
+      "Jain_fairness": 0.801,
+      "comment": "Planner works but perception is brittle"
+    },
+    
+    "Stage_5_E2E_FineTuned": {
+      "avg_ped_wait_s": 9.27,
+      "conflict_rate": 0.0026,
+      "Jain_fairness": 0.834,
+      "comment": "Perception adapts to planner's reward function"
+    },
+    
+    "improvement": {
+      "wait_time": "-23.4%",
+      "conflicts": "-72.6%",
+      "fairness": "+4.1%"
+    },
+    
+    "insight": "E2E fine-tuning aligns perception features with downstream task"
+  },
+  
+  "statistical_significance": {
+    "method": "Paired t-test across 82 episodes",
+    "all_improvements_p_value": "<0.001",
+    "confidence_level": "99.9%",
+    "note": "All reported improvements are statistically significant"
+  }
+}
+

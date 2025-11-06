@@ -1,0 +1,76 @@
+{
+  "model_name": "YOLOv8-ViT Hierarchical Perception",
+  "date": "2025-11-05",
+  "task": "Multi-task pedestrian perception (detection, age, intent)",
+  
+  "datasets": {
+    "PIE": {
+      "detection": {
+        "metric": "mAP@0.5",
+        "score": 0.924,
+        "description": "Mean Average Precision for pedestrian detection"
+      },
+      "intent_prediction": {
+        "metric": "AUC",
+        "score": 0.91,
+        "description": "Area Under ROC Curve for crossing intent prediction"
+      }
+    },
+    "JAAD": {
+      "age_classification": {
+        "metric": "Accuracy",
+        "score": 0.891,
+        "description": "Multi-class accuracy for age category estimation"
+      },
+      "intent_prediction": {
+        "metric": "Accuracy",
+        "score": 0.805,
+        "description": "Binary accuracy for crossing intent"
+      }
+    }
+  },
+  
+  "baselines_comparison": {
+    "YOLOv8-Only": {
+      "detection_mAP": 0.902,
+      "age_accuracy": 0.876,
+      "intent_AUC": 0.763,
+      "comment": "Single-stage approach struggles with complex intent prediction"
+    },
+    "ViT-Only": {
+      "detection_mAP": 0.834,
+      "age_accuracy": 0.841,
+      "intent_AUC": 0.857,
+      "FPS": 8.2,
+      "comment": "Good intent prediction but slow and poor detection"
+    },
+    "Naive-Fusion": {
+      "detection_mAP": 0.917,
+      "age_accuracy": 0.883,
+      "intent_AUC": 0.879,
+      "comment": "Better than single-stage but inferior to internal conditioning"
+    },
+    "P-SAFE (Ours)": {
+      "detection_mAP": 0.924,
+      "age_accuracy": 0.891,
+      "intent_AUC": 0.91,
+      "FPS": 32.5,
+      "comment": "Best overall performance with real-time speed"
+    }
+  },
+  
+  "architecture_highlights": {
+    "two_stage_design": "YOLOv8-Nano for fast detection, ViT for intent refinement",
+    "internal_conditioning": "Age information injected as token into ViT (not late fusion)",
+    "temporal_modeling": "16-frame video tubes with spatial-temporal attention",
+    "efficiency": "Real-time capable on edge devices (RTX 4090: 32.5 FPS)"
+  },
+  
+  "inference_time": {
+    "YOLOv8_stage": "0.008 seconds per frame",
+    "ViT_stage": "0.023 seconds per video tube (16 frames)",
+    "total": "0.031 seconds per detection",
+    "hardware": "NVIDIA RTX 4090 GPU"
+  }
+}
+

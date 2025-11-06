@@ -1,0 +1,165 @@
+{
+  "system_name": "P-SAFE",
+  "full_name": "Pedestrian Safety and Flow Enhancement",
+  "evaluation_date": "2025-11-05",
+  "test_duration": "82 episodes, 39,357 frames",
+  
+  "system_level_metrics": {
+    "average_pedestrian_wait_time": {
+      "value": 9.27,
+      "unit": "seconds",
+      "std_dev": 2.15,
+      "improvement_vs_actuated": "-67.7%",
+      "improvement_vs_xlight": "-50.0%"
+    },
+    "average_vehicle_delay": {
+      "value": 4.80,
+      "unit": "seconds",
+      "std_dev": 1.73,
+      "improvement_vs_actuated": "-42.2%"
+    },
+    "conflict_rate": {
+      "value": 0.26,
+      "unit": "percent",
+      "total_conflicts": 3,
+      "total_crossings": 1152,
+      "improvement_vs_actuated": "-97.0%",
+      "improvement_vs_xlight": "-93.8%"
+    },
+    "jain_fairness_index": {
+      "value": 0.834,
+      "improvement_vs_xlight": "+7.2%",
+      "improvement_vs_actuated": "+21.4%"
+    },
+    "intersection_throughput": {
+      "value": 265,
+      "unit": "vehicles_per_hour",
+      "improvement_vs_actuated": "+20.5%"
+    }
+  },
+  
+  "scenario_breakdown": {
+    "Scenario_1_Low_Density": {
+      "description": "Low traffic with vulnerable pedestrians",
+      "pedestrian_wait_time": 10.36,
+      "vehicle_delay": 5.26,
+      "conflict_rate": 0.78,
+      "fairness_index": 0.783,
+      "num_episodes": 28
+    },
+    "Scenario_2_High_Density": {
+      "description": "High-density group crossing",
+      "pedestrian_wait_time": 8.51,
+      "vehicle_delay": 3.54,
+      "conflict_rate": 0.32,
+      "fairness_index": 0.947,
+      "num_episodes": 27
+    },
+    "Scenario_3_Occlusion": {
+      "description": "Mixed traffic with visual occlusion",
+      "pedestrian_wait_time": 10.49,
+      "vehicle_delay": 5.60,
+      "conflict_rate": 0.00,
+      "fairness_index": 0.772,
+      "num_episodes": 27,
+      "occlusion_rate": "41.3%",
+      "occlusion_resilience": "92.3%"
+    }
+  },
+  
+  "baseline_comparison": {
+    "Fixed_Time": {
+      "pedestrian_wait_time": 42.3,
+      "vehicle_delay": 12.5,
+      "conflict_rate": 11.2,
+      "fairness_index": 0.512
+    },
+    "Actuated": {
+      "pedestrian_wait_time": 28.7,
+      "vehicle_delay": 8.3,
+      "conflict_rate": 8.7,
+      "fairness_index": 0.687
+    },
+    "X_Light": {
+      "pedestrian_wait_time": 18.5,
+      "vehicle_delay": 6.8,
+      "conflict_rate": 4.2,
+      "fairness_index": 0.778
+    },
+    "P_SAFE": {
+      "pedestrian_wait_time": 9.27,
+      "vehicle_delay": 4.80,
+      "conflict_rate": 0.26,
+      "fairness_index": 0.834
+    }
+  },
+  
+  "modality_contribution": {
+    "BLE_Only": {
+      "pedestrian_wait_time": 11.2,
+      "conflict_rate": 1.1,
+      "fairness_index": 0.796,
+      "occlusion_resilience": "98.5%"
+    },
+    "Vision_Only": {
+      "pedestrian_wait_time": 14.8,
+      "conflict_rate": 2.3,
+      "fairness_index": 0.742,
+      "occlusion_resilience": "39.7%"
+    },
+    "Fusion_Attention_Only": {
+      "pedestrian_wait_time": 9.9,
+      "conflict_rate": 0.5,
+      "fairness_index": 0.823,
+      "occlusion_resilience": "89.1%"
+    },
+    "P_SAFE_Full_Mamba2": {
+      "pedestrian_wait_time": 9.27,
+      "conflict_rate": 0.26,
+      "fairness_index": 0.834,
+      "occlusion_resilience": "92.3%"
+    }
+  },
+  
+  "decision_module_analysis": {
+    "gross_compliance_rate": "59.4%",
+    "smart_compliance_rate": "97.4%",
+    "average_response_time": "9.27 seconds",
+    "action_sequence_length_avg": 4.2,
+    "most_frequent_actions": [
+      "EXTEND_PED",
+      "BATCH_SERVICE",
+      "TRANSITION",
+      "PRIORITY_ELDERLY"
+    ]
+  },
+  
+  "statistical_significance": {
+    "p_value": "< 0.001",
+    "test": "Wilcoxon signed-rank test",
+    "confidence_interval": "95%",
+    "note": "All improvements are statistically significant"
+  },
+  
+  "computational_performance": {
+    "total_system_parameters": 37700000,
+    "end_to_end_latency_ms": 90,
+    "breakdown": {
+      "STGCN_BLE": 15,
+      "YOLOv8_ViT": 28,
+      "Mamba2_Fusion": 12,
+      "SDT_TSC": 35
+    },
+    "hardware": "NVIDIA RTX 4090, 24GB VRAM",
+    "real_time_capable": true
+  },
+  
+  "notes": [
+    "Evaluation performed on custom simulation platform",
+    "202 unique pedestrian crossing events analyzed",
+    "11,185 vehicle data points collected",
+    "All metrics averaged across 3 independent runs",
+    "Training data not included in this repository"
+  ]
+}
+

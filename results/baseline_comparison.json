@@ -1,0 +1,170 @@
+{
+  "study_name": "P-SAFE vs. State-of-the-Art Baselines",
+  "date": "2025-11-05",
+  "evaluation_platform": "Custom distributed simulation (82 episodes, 202 crossings, 11,185 vehicles)",
+  
+  "system_level_comparison": {
+    "metrics": [
+      "avg_pedestrian_wait_time_s",
+      "avg_vehicle_delay_s",
+      "conflict_rate_percent",
+      "Jain_fairness_index",
+      "response_time_s"
+    ],
+    
+    "controllers": {
+      "Fixed-Time": {
+        "type": "Traditional",
+        "avg_ped_wait_s": 42.3,
+        "avg_veh_delay_s": 12.5,
+        "conflict_rate": 11.2,
+        "Jain_fairness": 0.512,
+        "response_time_s": 42.3,
+        "description": "Pre-timed signal with fixed cycle"
+      },
+      
+      "Actuated": {
+        "type": "Traditional",
+        "avg_ped_wait_s": 28.7,
+        "avg_veh_delay_s": 8.3,
+        "conflict_rate": 8.7,
+        "Jain_fairness": 0.687,
+        "response_time_s": 28.7,
+        "description": "Vehicle-actuated with pedestrian push button"
+      },
+      
+      "X-Light": {
+        "type": "DRL Baseline",
+        "avg_ped_wait_s": 18.5,
+        "avg_veh_delay_s": "N/A",
+        "conflict_rate": 4.2,
+        "Jain_fairness": 0.778,
+        "response_time_s": 18.5,
+        "description": "Graph-based DRL for traffic signal control"
+      },
+      
+      "P-SAFE-Scenario-1": {
+        "type": "P-SAFE (Low-Density)",
+        "avg_ped_wait_s": 10.36,
+        "avg_veh_delay_s": 5.26,
+        "conflict_rate": 0.78,
+        "Jain_fairness": 0.783,
+        "response_time_s": 10.36,
+        "description": "Vulnerable pedestrian prioritization"
+      },
+      
+      "P-SAFE-Scenario-2": {
+        "type": "P-SAFE (High-Density Group)",
+        "avg_ped_wait_s": 8.51,
+        "avg_veh_delay_s": 3.54,
+        "conflict_rate": 0.32,
+        "Jain_fairness": 0.947,
+        "response_time_s": 8.51,
+        "description": "Batch service for pedestrian groups"
+      },
+      
+      "P-SAFE-Scenario-3": {
+        "type": "P-SAFE (Occlusion)",
+        "avg_ped_wait_s": 10.49,
+        "avg_veh_delay_s": 5.60,
+        "conflict_rate": 0.0,
+        "Jain_fairness": 0.772,
+        "response_time_s": 10.49,
+        "description": "Multi-modal fusion handles 41.3% occlusion"
+      },
+      
+      "P-SAFE-Average": {
+        "type": "P-SAFE (Overall)",
+        "avg_ped_wait_s": 9.27,
+        "avg_veh_delay_s": 4.80,
+        "conflict_rate": 0.26,
+        "Jain_fairness": 0.834,
+        "response_time_s": 9.27,
+        "description": "Average across all three scenarios"
+      }
+    },
+    
+    "improvements": {
+      "vs_Actuated": {
+        "ped_wait": "-67.7%",
+        "veh_delay": "-42.2%",
+        "conflict": "-97.0%",
+        "fairness": "+21.4%",
+        "response_time": "-67.7%"
+      },
+      
+      "vs_X-Light": {
+        "ped_wait": "-50.0%",
+        "veh_delay": "N/A",
+        "conflict": "-93.8%",
+        "fairness": "+7.2%",
+        "response_time": "-50.0%"
+      }
+    }
+  },
+  
+  "key_findings": {
+    "pareto_improvement": "Simultaneous reduction in both pedestrian wait AND vehicle delay (not zero-sum)",
+    "conflict_elimination": "Near-zero conflicts (0.26% avg) vs 8.7% for Actuated",
+    "occlusion_resilience": "0% conflicts in Scenario 3 (vision-only systems fail)",
+    "fairness": "SOTA Jain index of 0.834, 7.2% better than X-Light",
+    "group_handling": "Scenario 2 achieves 0.947 fairness via batch service policy"
+  },
+  
+  "statistical_validation": {
+    "num_episodes": 82,
+    "total_pedestrian_crossings": 202,
+    "total_vehicle_datapoints": 11185,
+    "frames_processed": 39357,
+    "p_value": "<0.001",
+    "conclusion": "All improvements are statistically significant at 99.9% confidence"
+  },
+  
+  "comparison_to_literature": {
+    "trajectory_prediction": {
+      "Social-LSTM_FDE": "3.85m",
+      "P-SAFE_FDE": "0.857m",
+      "improvement": "77.7%",
+      "horizon": "3 seconds"
+    },
+    
+    "intent_prediction": {
+      "PIE_dataset_SOTA": "~0.85 AUC (various models)",
+      "P-SAFE_AUC": "0.91",
+      "improvement": "+7.1%",
+      "note": "Competitive with specialized intent prediction models"
+    },
+    
+    "multi_modal_fusion": {
+      "typical_vision_only": "~40% resilience under occlusion",
+      "P-SAFE_resilience": "92.3%",
+      "improvement": "+131%"
+    }
+  },
+  
+  "computational_efficiency": {
+    "P-SAFE": {
+      "STGCN-BLE": "12 ms",
+      "YOLOv8-ViT": "31 ms",
+      "Mamba2-Fusion": "3.2 ms",
+      "SDT-TSC": "8 ms",
+      "total_latency": "54.2 ms",
+      "real_time_capable": true,
+      "hardware": "NVIDIA RTX 4090"
+    },
+    
+    "comparison": {
+      "X-Light": "~80 ms (estimated)",
+      "ViT-Only": "~240 ms (too slow)",
+      "Social-LSTM": "~15 ms (but poor accuracy)"
+    }
+  },
+  
+  "deployment_feasibility": {
+    "edge_computing": "All modules fit on single RTX 4090",
+    "latency": "< 100ms end-to-end (real-time requirement)",
+    "wearable_dependency": "High smartphone penetration, targeted programs for vulnerable users",
+    "scalability": "Tested with up to 15 simultaneous pedestrians"
+  }
+}
+

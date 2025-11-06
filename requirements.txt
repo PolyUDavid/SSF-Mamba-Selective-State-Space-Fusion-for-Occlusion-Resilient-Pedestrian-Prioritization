@@ -1,0 +1,33 @@
+# P-SAFE: Multi-Modal AI Framework for Pedestrian-Centric Traffic Signal Control
+# Requirements for model inference and evaluation
+# 
+# Author: Nok KO
+# Contact: Nok-david.ko@connect.polyu.hk
+# Date: November 5, 2025 (Revision)
+
+# Core Dependencies
+torch>=2.0.0
+torchvision>=0.15.0
+numpy>=1.24.0
+scipy>=1.10.0
+
+# Data Processing
+pandas>=2.0.0
+h5py>=3.8.0
+
+# Visualization (optional, for analysis)
+matplotlib>=3.7.0
+seaborn>=0.12.0
+
+# Utilities
+tqdm>=4.65.0
+pyyaml>=6.0
+tensorboard>=2.13.0
+
+# Testing
+pytest>=7.3.0
+pytest-cov>=4.1.0
+
+# Note: This package does not include training data or simulation platform code.
+# Only model architectures and experimental result JSONs are provided.
+

@@ -1,0 +1,99 @@
+{
+  "model_name": "Mamba-2 Cross-Modal Fusion",
+  "date": "2025-11-05",
+  "task": "Fuse BLE trajectory features with visual perception features",
+  
+  "performance_metrics": {
+    "detection_F1_score": 0.984,
+    "occlusion_resilience": 0.923,
+    "fusion_latency_ms": 3.2,
+    "parameter_count": "8.4M"
+  },
+  
+  "modality_ablation": {
+    "Vision-Only": {
+      "F1_score": 0.694,
+      "occlusion_resilience": 0.397,
+      "avg_ped_wait_s": 14.8,
+      "conflict_rate": 0.023,
+      "comment": "Fails under occlusion"
+    },
+    "BLE-Only": {
+      "F1_score": 0.910,
+      "occlusion_resilience": 0.985,
+      "avg_ped_wait_s": 11.2,
+      "conflict_rate": 0.011,
+      "comment": "Robust but lacks semantic context"
+    },
+    "Fusion-Attention-Only": {
+      "F1_score": 0.968,
+      "occlusion_resilience": 0.891,
+      "avg_ped_wait_s": 9.9,
+      "conflict_rate": 0.005,
+      "comment": "Good but stateless (no temporal memory)"
+    },
+    "P-SAFE-Mamba2-Fusion": {
+      "F1_score": 0.984,
+      "occlusion_resilience": 0.923,
+      "avg_ped_wait_s": 9.27,
+      "conflict_rate": 0.0026,
+      "Jain_fairness": 0.834,
+      "comment": "Best: selective state preserves semantic memory during occlusion"
+    }
+  },
+  
+  "key_findings": {
+    "F1_improvement_over_best_single": "+8.1% (0.984 vs 0.910 BLE-Only)",
+    "occlusion_resilience_vs_vision": "+132% (0.923 vs 0.397)",
+    "mamba2_vs_attention_only": "+3.6% resilience, -48% conflicts",
+    "attribute_permanence": "Mamba-2 SSM retains 'child' attribute during 3s occlusion"
+  },
+  
+  "architecture_details": {
+    "modality_alignment": "Linear interpolation to 32 timesteps",
+    "cross_modal_attention": "2 layers (Vision->BLE, BLE->Vision)",
+    "mamba_blocks": "6 layers with selective SSM",
+    "output": "256-dim fused feature vector",
+    "training_strategy": "Stage 3: Encoders frozen, fusion trained on occlusion events"
+  },
+  
+  "dynamic_modality_weighting": {
+    "clear_conditions": {
+      "alpha_Vision": 0.72,
+      "alpha_BLE": 0.28,
+      "comment": "Trust vision more when available"
+    },
+    "severe_occlusion": {
+      "alpha_Vision": 0.05,
+      "alpha_BLE": 0.95,
+      "comment": "Switches almost entirely to BLE"
+    },
+    "mechanism": "Learned through attention weights in cross-modal layers"
+  },
+  
+  "comparison_to_baselines": {
+    "Simple-Concatenation": {
+      "F1": 0.921,
+      "comment": "No learned interaction"
+    },
+    "Gated-Fusion": {
+      "F1": 0.947,
+      "comment": "Better but still no temporal memory"
+    },
+    "Transformer-Fusion": {
+      "F1": 0.968,
+      "comment": "Good but O(T^2) complexity"
+    },
+    "Mamba2-Fusion (Ours)": {
+      "F1": 0.984,
+      "comment": "Best performance with O(T) complexity"
+    }
+  },
+  
+  "inference_efficiency": {
+    "forward_pass_time": "3.2 ms",
+    "memory_usage": "384 MB",
+    "hardware": "NVIDIA RTX 4090 GPU"
+  }
+}
+
