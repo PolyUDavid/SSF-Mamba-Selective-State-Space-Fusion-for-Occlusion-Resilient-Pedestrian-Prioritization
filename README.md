@@ -1,12 +1,10 @@
 # P-SAFE: A Multi-Modal AI Framework for Pedestrian-Centric Traffic Signal Prioritization
 
-[![CVPR 2025](https://img.shields.io/badge/CVPR-2025-blue)](https://cvpr.thecvf.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 
-**Author:** Nok KO  
-**Contact:** Nok-david.ko@connect.polyu.hk  
-**Date:** November 5, 2025 (Revision)
+**Author:** David KO  
+**Date:** November 2025
 
 ---
 
@@ -675,10 +673,9 @@ Please include:
 If you use this code or refer to our work, please cite:
 
 ```bibtex
-@inproceedings{ko2025psafe,
+@article{ko2025psafe,
   title={P-SAFE: A Multi-Modal AI Framework for Pedestrian-Centric Traffic Signal Prioritization using Wearable and Infrastructure Sensors},
-  author={Ko, Nok},
-  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+  author={Ko, David},
   year={2025}
 }
 ```
@@ -695,14 +692,13 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📧 Contact
 
-**Nok KO**  
-📧 Email: Nok-david.ko@connect.polyu.hk
+**David KO**
 
 For questions about:
 - **Code implementation**: Please open a GitHub issue
-- **Research collaboration**: Email with subject line "P-SAFE Collaboration"
-- **Data access requests**: Email with subject line "P-SAFE Data Request"
-- **Simulation platform**: Email with subject line "P-SAFE Simulation Platform"
+- **Research collaboration**: Please open a GitHub issue with tag "collaboration"
+- **Data access requests**: Please open a GitHub issue with tag "data-request"
+- **Simulation platform**: Please open a GitHub issue with tag "simulation"
 
 ---
 

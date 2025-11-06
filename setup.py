@@ -3,9 +3,8 @@ P-SAFE: Multi-Modal AI Framework for Pedestrian-Centric Traffic Signal Control
 
 Setup script for package installation.
 
-Author: Nok KO
-Contact: Nok-david.ko@connect.polyu.hk
-Date: November 5, 2025 (Revision)
+Author: David KO
+Date: November 2025
 """
 
 from setuptools import setup, find_packages
@@ -22,12 +21,12 @@ with open("requirements.txt", "r", encoding="utf-8") as fh:
 setup(
     name="psafe",
     version="1.0.0",
-    author="Nok KO",
-    author_email="Nok-david.ko@connect.polyu.hk",
+    author="David KO",
+    author_email="",
     description="Multi-Modal AI Framework for Pedestrian-Centric Traffic Signal Control",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/your-username/P-SAFE-CVPR",
+    url="https://github.com/PolyUDavid/SSF-Mamba",
     packages=find_packages(),
     classifiers=[
         "Development Status :: 4 - Beta",
@@ -67,9 +66,8 @@ setup(
     },
     keywords="traffic signal control, pedestrian safety, multi-modal fusion, computer vision, deep learning",
     project_urls={
-        "Bug Reports": "https://github.com/your-username/P-SAFE-CVPR/issues",
-        "Source": "https://github.com/your-username/P-SAFE-CVPR",
-        "Documentation": "https://github.com/your-username/P-SAFE-CVPR/tree/main/docs",
+        "Bug Reports": "https://github.com/PolyUDavid/SSF-Mamba/issues",
+        "Source": "https://github.com/PolyUDavid/SSF-Mamba",
     },
 )
 

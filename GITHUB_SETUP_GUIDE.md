@@ -1,10 +1,9 @@
 # GitHub Setup and Push Guide
 
-Complete guide to upload your P-SAFE code to GitHub for CVPR reviewers.
+Complete guide to upload your P-SAFE code to GitHub.
 
-**Author:** Nok KO  
-**Contact:** Nok-david.ko@connect.polyu.hk  
-**Date:** November 5, 2025
+**Author:** David KO  
+**Date:** November 2025
 
 ---
 
@@ -59,8 +58,8 @@ Initialized empty Git repository in /Volumes/Shared U/PI_BREPSC/CVPR_Submission/
 If this is your first time using Git, configure your name and email:
 
 ```bash
-git config --global user.name "Nok KO"
-git config --global user.email "Nok-david.ko@connect.polyu.hk"
+git config --global user.name "David KO"
+git config --global user.email "your-email@example.com"
 ```
 
 ### Step 4: Add All Files to Git
@@ -78,12 +77,12 @@ This stages all files for commit. The `.` means "all files in current directory"
 Commit the files with a message:
 
 ```bash
-git commit -m "Initial commit: P-SAFE implementation for CVPR 2025"
+git commit -m "Initial commit: P-SAFE complete implementation"
 ```
 
 You should see output like:
 ```
-[main (root-commit) abc1234] Initial commit: P-SAFE implementation for CVPR 2025
+[main (root-commit) abc1234] Initial commit: P-SAFE complete implementation
  30 files changed, 8500 insertions(+)
  create mode 100644 README.md
  ...
@@ -96,8 +95,8 @@ You should see output like:
 3. Select **"New repository"**
 
 **Repository Settings:**
-- **Repository name:** `P-SAFE-CVPR-2025` (or your preferred name)
-- **Description:** `P-SAFE: Multi-Modal AI Framework for Pedestrian Safety (CVPR 2025 Submission)`
+- **Repository name:** `P-SAFE` (or your preferred name)
+- **Description:** `P-SAFE: Multi-Modal AI Framework for Pedestrian Safety`
 - **Visibility:** 
   - Choose **Public** if you want it openly accessible
   - Choose **Private** if you want to control access (you can add reviewers later)
@@ -106,13 +105,13 @@ You should see output like:
 
 ### Step 7: Link Your Local Repository to GitHub
 
-After creating the repo, GitHub will show you commands. Copy your repository URL (it looks like: `https://github.com/your-username/P-SAFE-CVPR-2025.git`)
+After creating the repo, GitHub will show you commands. Copy your repository URL (it looks like: `https://github.com/your-username/P-SAFE.git`)
 
 Run these commands (replace with your actual URL):
 
 ```bash
 # Add the remote repository
-git remote add origin https://github.com/your-username/P-SAFE-CVPR-2025.git
+git remote add origin https://github.com/your-username/P-SAFE.git
 
 # Rename the branch to 'main' (if needed)
 git branch -M main
@@ -144,14 +143,14 @@ After successful push, you should see:
 Enumerating objects: 35, done.
 Counting objects: 100% (35/35), done.
 ...
-To https://github.com/your-username/P-SAFE-CVPR-2025.git
+To https://github.com/your-username/P-SAFE.git
  * [new branch]      main -> main
 Branch 'main' set up to track remote branch 'main' from 'origin'.
 ```
 
 ### Step 9: Verify on GitHub
 
-1. Go to your repository URL: `https://github.com/your-username/P-SAFE-CVPR-2025`
+1. Go to your repository URL: `https://github.com/your-username/P-SAFE`
 2. You should see all your files!
 3. Check that README.md displays correctly
 
@@ -180,20 +179,20 @@ After review, you can make it private again.
 
 ---
 
-## 📝 Add Repository Link to CVPR Submission
+## 📝 Share Your Repository
 
-### In Your CVPR Submission System:
+Your repository is now publicly accessible (if you chose Public visibility):
 
-1. Find the **"Supplementary Materials"** section
-2. Add your GitHub repository URL:
-   ```
-   https://github.com/your-username/P-SAFE-CVPR-2025
-   ```
-3. Add description:
-   ```
-   Code Repository: Complete model implementations, baseline comparisons,
-   and experimental results for P-SAFE framework.
-   ```
+Repository URL:
+```
+https://github.com/your-username/P-SAFE
+```
+
+Description:
+```
+Code Repository: Complete model implementations, baseline comparisons,
+and experimental results for P-SAFE framework.
+```
 
 ---
 
@@ -221,19 +220,11 @@ git push origin main
 
 ## 🎨 Optional: Make Your README Look Better
 
-### Add a Badge to Your Repository
-
-Add this at the very top of your README.md on GitHub:
-
-```markdown
-[![CVPR 2025 Submission](https://img.shields.io/badge/CVPR-2025%20Submission-blue)](https://github.com/your-username/P-SAFE-CVPR-2025)
-```
-
 ### Add Topics/Tags
 
 On your GitHub repository page:
 1. Click the ⚙️ (gear icon) next to "About"
-2. Add topics: `cvpr2025`, `pedestrian-safety`, `multi-modal-ai`, `traffic-control`, `computer-vision`
+2. Add topics: `pedestrian-safety`, `multi-modal-ai`, `traffic-control`, `computer-vision`, `mamba`
 3. Save changes
 
 ---
@@ -249,7 +240,7 @@ git remote -v
 # Should show: https://github.com/...
 
 # If it shows git@github.com, change it:
-git remote set-url origin https://github.com/your-username/P-SAFE-CVPR-2025.git
+git remote set-url origin https://github.com/your-username/P-SAFE.git
 ```
 
 ### Problem: "Updates were rejected because the remote contains work"
@@ -290,13 +281,13 @@ cd "/Volumes/Shared U/PI_BREPSC/CVPR_Submission"
 
 If you encounter any issues:
 - Check [GitHub's documentation](https://docs.github.com/)
-- Email: Nok-david.ko@connect.polyu.hk with subject "GitHub Setup Help"
+- Open a GitHub issue in your repository
 
 ---
 
 ## ✅ Final Checklist
 
-Before submitting to CVPR, verify:
+Before sharing your repository, verify:
 
 - [ ] All files pushed to GitHub successfully
 - [ ] README.md displays correctly on GitHub
@@ -307,17 +298,15 @@ Before submitting to CVPR, verify:
 - [ ] Example inference script works
 - [ ] requirements.txt is complete
 - [ ] LICENSE file is present
-- [ ] Contact email is correct: Nok-david.ko@connect.polyu.hk
+- [ ] Author name is correct: David KO
 
 ---
 
 ## 🎉 You're Done!
 
-Your code is now on GitHub and ready for CVPR reviewers!
+Your code is now on GitHub and ready to share!
 
-**Your repository URL:** `https://github.com/your-username/P-SAFE-CVPR-2025`
+**Your repository URL:** `https://github.com/your-username/P-SAFE`
 
-Add this URL to your CVPR submission in the Supplementary Materials section.
-
-Good luck with your submission! 🚀
+Good luck with your research! 🚀
 

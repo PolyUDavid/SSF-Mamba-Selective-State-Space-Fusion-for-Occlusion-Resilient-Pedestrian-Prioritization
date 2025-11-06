@@ -2,11 +2,10 @@
 Inference Example for P-SAFE Framework
 
 Demonstrates how to use the trained models for inference.
-This is a simplified example for reviewers to understand the workflow.
+This is a simplified example to understand the workflow.
 
-Author: Nok KO
-Contact: Nok-david.ko@connect.polyu.hk
-Date: November 5, 2025 (Revision)
+Author: David KO
+Date: November 2025
 """
 
 import torch
@@ -235,8 +234,8 @@ def load_pretrained_weights_example():
 if __name__ == "__main__":
     print("\n" + "="*80)
     print("P-SAFE Inference Example")
-    print("Contact: Nok-david.ko@connect.polyu.hk")
-    print("Date: November 5, 2025")
+    print("Author: David KO")
+    print("Date: November 2025")
     print("="*80)
     
     # Run inference example with random initialization
@@ -250,5 +249,5 @@ if __name__ == "__main__":
     
     print("\n✅ Inference example completed successfully!")
     print("\nFor training, please refer to the training scripts (not included in submission)")
-    print("For questions, contact: Nok-david.ko@connect.polyu.hk\n")
+    print("For questions, please open a GitHub issue\n")
 
